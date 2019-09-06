@@ -15,8 +15,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
+        <activity android:name=".otp"></activity>
+        <activity android:name=".otpverify" />
+        <activity android:name=".ResetPassword" />
+        <activity android:name=".forgotpassword" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -34,17 +36,17 @@
         <activity android:name=".cardetails" />
         <activity android:name=".choosecar" />
         <activity android:name=".Login" />
-        <activity android:name=".SplashScreen" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".signup" />
         <activity android:name=".PLACE" />
         <activity android:name=".Tripdetails" />
         <activity android:name=".choosetrip" />
         <activity android:name=".schedule" />
         <activity android:name=".scheduledetails" />
-        <activity android:name=".workplace"></activity>
+        <activity android:name=".workplace" />
         <activity android:name=".Setting" />
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashScreen"
             android:windowSoftInputMode="stateHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

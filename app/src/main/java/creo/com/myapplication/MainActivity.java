@@ -179,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         //  Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
         RecyclerPojo[] recyclerPojo = new RecyclerPojo[]{
-                new RecyclerPojo("ALTO", R.drawable.alto, "    45 KM", "4.2*"),
+                new RecyclerPojo("ALTO", R.drawable.alto, " 45 KM", "4.2*"),
                 new RecyclerPojo("DZIRE", R.drawable.dzire, "50 KM", "3.5*"),
                 new RecyclerPojo("SWIFT", R.drawable.swift, "60 KM", "4.0*"),
 
@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         actionBar.setElevation(0);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.blu)));
-     //   actionBar.setTitle(Html.fromHtml("<font color='#1AAEF4'>Name</font>"));
+        //   actionBar.setTitle(Html.fromHtml("<font color='#1AAEF4'>Name</font>"));
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -690,10 +690,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
            /* mMap.addMarker(new MarkerOptions().position(latLng).title("Marker"));
             mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));*/
 
-           Intent i=new Intent(MainActivity.this,GoogleMapActivity.class);
-           i.putExtra("lat",address.getLatitude());
-           i.putExtra("lon",address.getLongitude());
-           startActivity(i);
+            Intent i=new Intent(MainActivity.this,GoogleMapActivity.class);
+            i.putExtra("lat",address.getLatitude());
+            i.putExtra("lon",address.getLongitude());
+            startActivity(i);
         }
     }
     private void loadNavHeader() {
@@ -842,9 +842,6 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
 
 }
-
-
-
 
 
 

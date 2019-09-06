@@ -9,7 +9,7 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="30dp"
         android:id="@+id/img"
         android:src="@drawable/person"
         android:layout_centerHorizontal="true"/>
@@ -41,12 +41,14 @@
         android:layout_below="@+id/namek"
         android:id="@+id/carde"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="30dp"
         app:cardElevation="10dp"
         android:layout_height="50dp">
         <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_marginEnd="20dp"
             android:layout_height="match_parent">
 
             <TextView
@@ -71,12 +73,14 @@
         android:layout_below="@+id/carde"
         android:id="@+id/cardeu"
         android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginRight="10dp"
         android:layout_marginTop="30dp"
         app:cardElevation="10dp"
         android:layout_height="50dp">
         <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_marginEnd="20dp"
             android:layout_height="match_parent">
 
             <TextView
@@ -102,11 +106,13 @@
         android:id="@+id/cardep"
         android:layout_marginStart="20dp"
         android:layout_marginRight="10dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="30dp"
         app:cardElevation="10dp"
         android:layout_height="50dp">
         <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_marginEnd="20dp"
             android:layout_height="match_parent">
 
             <TextView
@@ -133,11 +139,13 @@
         android:id="@+id/cardeo"
         android:layout_marginStart="20dp"
         android:layout_marginRight="10dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="30dp"
         app:cardElevation="10dp"
         android:layout_height="50dp">
         <RelativeLayout
             android:layout_width="match_parent"
+            android:layout_marginEnd="20dp"
             android:layout_height="match_parent">
 
             <TextView
