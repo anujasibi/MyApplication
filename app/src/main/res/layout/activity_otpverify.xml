@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".otpverify">
+    tools:context="creo.com.myapplication.otpverify">
 
     <ImageView
         android:layout_width="100dp"
@@ -50,7 +50,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:id="@+id/description"
+        android:id="@+id/otpedit"
         android:gravity="center"
 
         android:layout_below="@+id/texty"
@@ -64,7 +64,7 @@
         android:layout_height="60dp"
         android:background="#1AAEF4"
         android:text="Verify"
-        android:layout_below="@+id/description"
+        android:layout_below="@+id/otpedit"
         android:layout_marginTop="30dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"

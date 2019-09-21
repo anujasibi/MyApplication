@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:background="#1AAEF4"
     android:layout_height="match_parent"
-    tools:context=".Login">
+    tools:context=".signup">
 
 
     <LinearLayout
@@ -120,7 +120,9 @@
                     android:layout_width="match_parent"
                     android:id="@+id/names"
                     android:paddingTop="5dp"
-                    android:hint="Enter your password"
+                    app:passwordToggleEnabled="true"
+                    android:inputType="textPassword"
+                    android:hint="Enter your Password"
                     android:layout_marginRight="5dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginBottom="2dp"
