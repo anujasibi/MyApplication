@@ -54,17 +54,29 @@ public class Login extends AppCompatActivity {
         phoneno.setText(phone_no);
         phoneno.setEnabled(false);
 
+
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loginuser();
+                if(password.getText().toString().equals("")){
+                    Toast.makeText(Login.this,"Password Field Required",Toast.LENGTH_LONG).show();
+
+                }
+                else {
+                    loginuser();
+
+                }
+
             }
         });
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Login.this,signup.class));
+                Intent intent = new Intent(Login.this, signup.class);
+                intent.putExtra("phone_no",phone_no);
+                startActivity(intent);
             }
         });
 
@@ -93,7 +105,7 @@ public class Login extends AppCompatActivity {
                                 startActivity(intent);
                             }
                             else{
-                                Toast.makeText(Login.this, ot, Toast.LENGTH_LONG).show();
+                                Toast.makeText(Login.this, "Invalid Password."+ot, Toast.LENGTH_LONG).show();
 
 
                             }

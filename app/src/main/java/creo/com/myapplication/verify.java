@@ -8,7 +8,7 @@ import android.view.Window;
 import androidx.appcompat.app.AppCompatActivity;
 import cdflynn.android.library.checkview.CheckView;
 
-public class Verified extends AppCompatActivity {
+public class verify extends AppCompatActivity {
     CheckView checkView;
     String phone_no = null;
 
@@ -42,7 +42,7 @@ public class Verified extends AppCompatActivity {
             @Override
             public void run() {
 
-                Intent intent = new Intent(Verified.this, signup.class);
+                Intent intent = new Intent(verify.this, ResetPassword.class);
                 intent.putExtra("phone_no", phone_no);
                 Log.d("pppppp","mm"+phone_no);
                 startActivity(intent);

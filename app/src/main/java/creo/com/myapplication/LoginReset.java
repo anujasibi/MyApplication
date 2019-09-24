@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,50 +27,72 @@ import java.util.Map;
 
 import creo.com.myapplication.utils.Global;
 
-public class ResetPassword extends AppCompatActivity {
-    EditText password;
-    TextView reset;
+public class LoginReset extends AppCompatActivity {
+    TextView login;
+    TextView signup;
+    TextInputEditText phoneno,password;
+    TextView forget;
     Context context=this;
     String phone_no = null;
-
-    private String URLline = Global.BASE_URL+"user/user_change_password/";
+    private String URLline = Global.BASE_URL+"user/user_login/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);//will hide the title
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reset_password);
+        setContentView(R.layout.activity_login);
 
-        password=findViewById(R.id.description);
-        reset=findViewById(R.id.tt);
-        Bundle bundle = getIntent().getExtras();
-        phone_no = bundle.getString("phone_no");
-        Log.d("phone","mm"+phone_no);
+        login=findViewById(R.id.tb);
+        phoneno=findViewById(R.id.name);
+        signup=findViewById(R.id.si);
+        password=findViewById(R.id.names);
+        forget=findViewById(R.id.tbc);
 
-        reset.setOnClickListener(new View.OnClickListener() {
+
+        login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                resetuser();
+                loginuser();
+            }
+        });
+
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginReset.this,signup.class));
+            }
+        });
+
+        forget.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginReset.this,forgotpassword.class));
             }
         });
     }
-
-    private void resetuser(){
+    private void loginuser(){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLline,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(ResetPassword.this,response,Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginReset.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             String ot = jsonObject.optString("message");
+                            String status=jsonObject.optString("status");
                             Log.d("otp","mm"+ot);
-                            Toast.makeText(ResetPassword.this, ot, Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(ResetPassword.this, LoginReset.class);
-                            startActivity(intent);
+                            if(status.equals("200")){
+                                Toast.makeText(LoginReset.this, ot, Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(LoginReset.this, MainActivity.class);
+                                startActivity(intent);
+                            }
+                            else{
+                                Toast.makeText(LoginReset.this, ot, Toast.LENGTH_LONG).show();
 
+
+                            }
 
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -84,13 +105,13 @@ public class ResetPassword extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(ResetPassword.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginReset.this,error.toString(),Toast.LENGTH_LONG).show();
                     }
                 }){
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("phone_no",phone_no);
+                params.put("phone_no",phoneno.getText().toString());
                 params.put("password",password.getText().toString());
                 return params;
             }
@@ -100,6 +121,7 @@ public class ResetPassword extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         requestQueue.add(stringRequest);
 
-
     }
+
 }
+

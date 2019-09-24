@@ -41,7 +41,7 @@ public class Homepage extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);//will hide the title
         getSupportActionBar().hide();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homepage);
+        setContentView(R.layout.home);
         num=findViewById(R.id.name);
 
         textView=findViewById(R.id.cn);
@@ -65,6 +65,10 @@ public class Homepage extends AppCompatActivity {
                     }
                     else if(status.equals("400")){
                         Toast.makeText(Homepage.this,"Invalid PhoneNumber",Toast.LENGTH_LONG).show();
+
+                    }
+                    else if(status.equals("422")){
+                        Toast.makeText(Homepage.this,"PhoneNumber Field should not be null",Toast.LENGTH_LONG).show();
 
                     }
                     else {
@@ -104,10 +108,11 @@ public class Homepage extends AppCompatActivity {
 
         try {
             JSONObject jsonObject = new JSONObject(response);
-            otp = jsonObject.getString("message");
-            status=jsonObject.getString("status");
+            otp = jsonObject.optString("message");
+            status=jsonObject.optString("status");
 
             Log.d("otp","mm"+otp);
+            Log.d("status","mm"+status);
         } catch (JSONException e) {
             e.printStackTrace();
         }
