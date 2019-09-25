@@ -2,6 +2,7 @@ package creo.com.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class ResetPassword extends AppCompatActivity {
     String phone_no = null;
 
     private String URLline = Global.BASE_URL+"user/user_change_password/";
+    private ProgressDialog dialog ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +49,14 @@ public class ResetPassword extends AppCompatActivity {
         reset=findViewById(R.id.tt);
         Bundle bundle = getIntent().getExtras();
         phone_no = bundle.getString("phone_no");
+        dialog=new ProgressDialog(ResetPassword.this,R.style.MyAlertDialogStyle);
         Log.d("phone","mm"+phone_no);
 
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.setMessage("Loading..");
+                dialog.show();
                 resetuser();
             }
         });
@@ -62,6 +67,7 @@ public class ResetPassword extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        dialog.dismiss();
                         Toast.makeText(ResetPassword.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {

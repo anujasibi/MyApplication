@@ -2,6 +2,7 @@ package creo.com.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -50,13 +52,17 @@ public class Homepage extends AppCompatActivity {
         textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final ProgressDialog dialog = new ProgressDialog(Homepage.this,R.style.MyAlertDialogStyle);
+                dialog.setMessage("Loading..");
+                dialog.show();
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, URLline,
             new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    Toast.makeText(Homepage.this,response,Toast.LENGTH_LONG).show();
+                  //  Toast.makeText(Homepage.this,response,Toast.LENGTH_LONG).show();
                     parseData(response);
-                    Log.d("response","hhh"+response);
+                    dialog.dismiss();
+                  //  Log.d("response","hhh"+response);
                     if(otp.equals("verify")){
                         Intent intent = new Intent(Homepage.this, Login.class);
                         intent.putExtra("phone_no", num.getText().toString());
@@ -75,8 +81,8 @@ public class Homepage extends AppCompatActivity {
                         Intent intent = new Intent(Homepage.this, otpverify.class);
                         intent.putExtra("phone_no", num.getText().toString());
                         intent.putExtra("otp", otp);
-                        Log.d("otp", "mmm" + otp);
-                        Log.d("phone", "mmm" + num.getText().toString());
+                      //  Log.d("otp", "mmm" + otp);
+                      //  Log.d("phone", "mmm" + num.getText().toString());
                         startActivity(intent);
                     }
 
@@ -100,19 +106,20 @@ public class Homepage extends AppCompatActivity {
     };
 
     RequestQueue requestQueue = Volley.newRequestQueue(context);
+                stringRequest.setRetryPolicy(new DefaultRetryPolicy(10000,0,DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
                 requestQueue.add(stringRequest);
 
 }
     public void parseData(String response) {
-        Log.d("response","hhh"+response);
+       // Log.d("response","hhh"+response);
 
         try {
             JSONObject jsonObject = new JSONObject(response);
             otp = jsonObject.optString("message");
             status=jsonObject.optString("status");
 
-            Log.d("otp","mm"+otp);
-            Log.d("status","mm"+status);
+          //  Log.d("otp","mm"+otp);
+          //  Log.d("status","mm"+status);
         } catch (JSONException e) {
             e.printStackTrace();
         }

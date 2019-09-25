@@ -2,6 +2,7 @@ package creo.com.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ public class forgotpassword extends AppCompatActivity {
     EditText phone;
     Context context=this;
     private String URLline = Global.BASE_URL+"user/user_forget_password/";
+    private ProgressDialog dialog ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +46,13 @@ public class forgotpassword extends AppCompatActivity {
         phone=findViewById(R.id.description);
         reset=findViewById(R.id.tt);
         register=findViewById(R.id.textpp);
+        dialog=new ProgressDialog(forgotpassword.this,R.style.MyAlertDialogStyle);
 
         reset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.setMessage("Loading..");
+                dialog.show();
              //   startActivity(new Intent(forgotpassword.this,otp.class));
                 forgotuser();
             }
@@ -68,7 +73,8 @@ public class forgotpassword extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(forgotpassword.this,response,Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
+                     //   Toast.makeText(forgotpassword.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {
                             JSONObject jsonObject = new JSONObject(response);
@@ -77,7 +83,7 @@ public class forgotpassword extends AppCompatActivity {
                             Log.d("status","mm"+status);
                             Log.d("otp","mm"+ot);
                             if(status.equals("200")){
-                                Toast.makeText(forgotpassword.this, ot, Toast.LENGTH_LONG).show();
+                               // Toast.makeText(forgotpassword.this, ot, Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(forgotpassword.this, otp.class);
                                 intent.putExtra("phone_no",phone.getText().toString());
                                 startActivity(intent);

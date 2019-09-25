@@ -2,6 +2,7 @@ package creo.com.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ public class signup extends AppCompatActivity {
     String phone_no = null;
     TextInputEditText name,email,phoneno,password;
     private String URLline = Global.BASE_URL+"user/new_cabs/sign_up/";
+    private ProgressDialog dialog ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +54,12 @@ public class signup extends AppCompatActivity {
         Log.d("phone","mm"+phone_no);
         phoneno.setText(phone_no);
         phoneno.setEnabled(false);
+        dialog=new ProgressDialog(signup.this,R.style.MyAlertDialogStyle);
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.setMessage("Loading..");
+                dialog.show();
                 signupuser();
              //   startActivity(new Intent(signup.this,Login.class));
             }
@@ -77,6 +82,7 @@ public class signup extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        dialog.dismiss();
                         Toast.makeText(signup.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {
@@ -86,6 +92,10 @@ public class signup extends AppCompatActivity {
                             Log.d("otp","mm"+ot);
                             if(status.equals("400")){
                                 Toast.makeText(signup.this, ot, Toast.LENGTH_LONG).show();
+                            }
+                            else if(status.equals("422")){
+                                Toast.makeText(signup.this,"PhoneNumber Field should not be null",Toast.LENGTH_LONG).show();
+
                             }
                             else{
                                 Toast.makeText(signup.this, ot, Toast.LENGTH_LONG).show();

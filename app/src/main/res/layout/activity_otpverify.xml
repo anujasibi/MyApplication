@@ -52,7 +52,8 @@
         android:layout_height="50dp"
         android:id="@+id/otpedit"
         android:gravity="center"
-
+        android:inputType="number"
+        android:maxLength="4"
         android:layout_below="@+id/texty"
         android:background="@drawable/edit"
         android:layout_marginStart="20dp"

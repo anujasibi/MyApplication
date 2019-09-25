@@ -2,6 +2,7 @@ package creo.com.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class LoginReset extends AppCompatActivity {
     Context context=this;
     String phone_no = null;
     private String URLline = Global.BASE_URL+"user/user_login/";
+    private ProgressDialog dialog ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,11 +50,14 @@ public class LoginReset extends AppCompatActivity {
         signup=findViewById(R.id.si);
         password=findViewById(R.id.names);
         forget=findViewById(R.id.tbc);
+        dialog=new ProgressDialog(LoginReset.this,R.style.MyAlertDialogStyle);
 
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.setMessage("Loading..");
+                dialog.show();
                 loginuser();
             }
         });
@@ -76,6 +81,7 @@ public class LoginReset extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        dialog.dismiss();
                         Toast.makeText(LoginReset.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {

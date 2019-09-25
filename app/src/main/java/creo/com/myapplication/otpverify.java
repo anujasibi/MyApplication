@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -47,6 +48,7 @@ public class otpverify extends AppCompatActivity  implements
     String phone_no = null;
     Context context=this;
     private String URLline = Global.BASE_URL+"user/user_verify/";
+    private ProgressDialog dialog ;
 
 
     @Override
@@ -57,6 +59,7 @@ public class otpverify extends AppCompatActivity  implements
         setContentView(R.layout.activity_otpverify);
         otp = findViewById(R.id.tt);
         otpedit = findViewById(R.id.otpedit);
+        dialog=new ProgressDialog(otpverify.this,R.style.MyAlertDialogStyle);
 
 
         Bundle bundle = getIntent().getExtras();
@@ -73,6 +76,8 @@ public class otpverify extends AppCompatActivity  implements
                     otpedit.setError("Please enter the otp to proceed");
                 }
                 if (otpedit.getText().toString().length() == 4) {
+                    dialog.setMessage("Loading..");
+                    dialog.show();
 
                //     verifyuser();
                     verifynewuser();
@@ -91,6 +96,7 @@ public class otpverify extends AppCompatActivity  implements
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        dialog.dismiss();
                         Toast.makeText(otpverify.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {
