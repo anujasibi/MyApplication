@@ -24,17 +24,17 @@ public class choosetrip extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choosetrip);
 
-        RecyclerPojo[] recyclerPojo = new RecyclerPojo[]{
+      /*  RecyclerPojo[] recyclerPojo = new RecyclerPojo[]{
                 new RecyclerPojo("ALTO", R.drawable.alto, "45 KM", "4.2*"),
                 new RecyclerPojo("DZIRE", R.drawable.dzire, "50 KM", "3.5*"),
                 new RecyclerPojo("SWIFT", R.drawable.swift, "60 KM", "4.0*"),
 
 
-        };
+        };*/
 
 
         recyclerView = findViewById(R.id.re);
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(recyclerPojo,context);
+       // RecyclerAdapter recyclerAdapter = new RecyclerAdapter(recyclerPojo,context);
 
 
 

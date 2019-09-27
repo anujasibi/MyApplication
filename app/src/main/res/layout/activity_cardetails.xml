@@ -57,14 +57,14 @@ android:fitsSystemWindows="true">
                     android:textSize="20sp"
                     android:textColor="#000"
                     android:layout_marginLeft="5dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:id="@+id/name"/>
 
                 <TextView
                     android:id="@+id/Rating"
                     android:layout_width="50dp"
                     android:layout_height="30dp"
-                    android:layout_toEndOf="@+id/name"
+                   android:layout_below="@+id/name"
                     android:layout_marginTop="10dp"
                     android:layout_marginLeft="25dp"
                     android:background="#1AAEF4"
@@ -75,27 +75,13 @@ android:fitsSystemWindows="true">
                     android:textColor="#fff"
                     android:textStyle="bold" />
 
+
+
                 <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:id="@+id/imga"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="5dp"
-                    android:layout_marginBottom="2dp"
-                    android:layout_below="@+id/Rating"
-                    android:src="@drawable/call" />
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_below="@+id/Rating"
-                    android:layout_toEndOf="@+id/imga"
-                    android:src="@drawable/message" />
-                <de.hdodenhof.circleimageview.CircleImageView
                     android:layout_width="100dp"
                     android:layout_height="90dp"
                     android:layout_marginTop="5dp"
+                    android:scaleType="centerInside"
                     android:layout_alignParentRight="true"
                     android:src="@drawable/person"/>
             </RelativeLayout>

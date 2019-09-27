@@ -24,6 +24,12 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import android.Manifest;
@@ -84,9 +90,18 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+import creo.com.myapplication.utils.Global;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
 
@@ -144,6 +159,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     String provider;
     CardView cardView,card,cardf,cardn;
     ImageView im;
+    Context context=this;
+    String phone_no = null;
+    private String URLline = Global.BASE_URL+"driver/get_cabs/";
+    private String latitu;
+    private String longitu;
+    private String URLstring = "https://demonuts.com/Demonuts/JsonTest/Tennis/json_parsing.php";
+
+    ArrayList<RecyclerPojo> dataModelArrayList;
+
 
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -152,6 +176,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
+
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         cardView = (CardView) findViewById(R.id.card);
         card=(CardView)findViewById(R.id.carde);
@@ -179,21 +204,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         provider = locationManager.getBestProvider(new Criteria(), false);
 
-        //  Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        RecyclerPojo[] recyclerPojo = new RecyclerPojo[]{
-                new RecyclerPojo("ALTO", R.drawable.alto, " 45 KM", "4.2*"),
-                new RecyclerPojo("DZIRE", R.drawable.dzire, "50 KM", "3.5*"),
-                new RecyclerPojo("SWIFT", R.drawable.swift, "60 KM", "4.0*"),
 
-
-        };
 
 
         recyclerView = findViewById(R.id.re);
-        RecyclerAdapter recyclerAdapter = new RecyclerAdapter(recyclerPojo,mContext);
+      /*  RecyclerAdapter recyclerAdapter = new RecyclerAdapter(recyclerPojo,mContext);
 
         recyclerView.setAdapter(recyclerAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));*/
+
 
 
         mContext = this;
@@ -319,8 +338,13 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     mLocation.setLatitude(mCenterLatLong.latitude);
                     mLocation.setLongitude(mCenterLatLong.longitude);
 
+                    latitu=Double.toString(mCenterLatLong.latitude);
+                    longitu=Double.toString(mCenterLatLong.longitude);
+
                     startIntentService(mLocation);
                     mLocationMarkerText.setText("Lat : " + mCenterLatLong.latitude + "," + "Long : " + mCenterLatLong.longitude);
+
+                    passlatlong();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -791,10 +815,10 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         }
 
-        super.onBackPressed();
+
 
         if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
+          finishAffinity();
             return;
         }
 
@@ -857,6 +881,85 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
         return super.onOptionsItemSelected(item);
     }
+
+    private void passlatlong(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLline,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(MainActivity.this,response,Toast.LENGTH_LONG).show();
+                        //parseData(response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String ot = jsonObject.optString("message");
+                            String status=jsonObject.optString("status");
+                            Log.d("otp","mm"+ot);
+                            Toast.makeText(MainActivity.this, ot, Toast.LENGTH_LONG).show();
+                          //  JSONObject obj = new JSONObject(response);
+
+
+                            dataModelArrayList = new ArrayList<>();
+                            JSONArray dataArray  = jsonObject.getJSONArray("available_cabs");
+
+                            for (int i = 0; i < dataArray.length(); i++) {
+
+                                RecyclerPojo playerModel = new RecyclerPojo();
+                                JSONObject dataobj = dataArray.getJSONObject(i);
+
+                                playerModel.setName(dataobj.getString("Car"));
+                                playerModel.setDistance(dataobj.getString("Name"));
+                                playerModel.setImage(Global.BASE_URL+"media/"+dataobj.getString("image"));
+                                //  playerModel.setRat(dataobj.getString(""));
+
+
+                                dataModelArrayList.add(playerModel);
+
+
+
+                                setupRecycler();
+
+                            }
+
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Log.d("response","hhh"+response);
+
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(MainActivity.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("latitude", latitu);
+                params.put("longitude", longitu);
+                return params;
+            }
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
+
+    }
+    @SuppressLint("WrongConstant")
+    private void setupRecycler(){
+
+        recyclerAdapter = new RecyclerAdapter(this,dataModelArrayList);
+        recyclerView.setAdapter(recyclerAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
+
+    }
+
+
+
 
 
 }

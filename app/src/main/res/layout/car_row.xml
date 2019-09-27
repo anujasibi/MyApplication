@@ -39,7 +39,7 @@
                     android:layout_width="30dp"
                     android:layout_height="wrap_content"
                     android:id="@+id/rat"
-                    android:text="Rating"
+                    android:text="4.5*"
                     android:textAlignment="center"
                     android:gravity="center_vertical"
                     android:layout_below="@+id/name"

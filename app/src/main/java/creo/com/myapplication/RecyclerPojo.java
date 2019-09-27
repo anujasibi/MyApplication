@@ -5,26 +5,21 @@ package creo.com.myapplication;
 public class RecyclerPojo {
 
     public String name;
-    public int image;
+    public String image;
     public String rat;
     public String distance;
 
-    public RecyclerPojo(String name, int image, String distance, String rat) {
-        this.name=name;
-        this.image=image;
-        this.rat=rat;
-        this.distance=distance;
-    }
+
 
     public String getName() {
         return name;
     }
 
-    public String getRat() {
+    /*public String getRat() {
         return rat;
     }
-
-    public int getImage() {
+*/
+    public String getImage(){
         return image;
     }
 
@@ -36,11 +31,11 @@ public class RecyclerPojo {
         this.name = name;
     }
 
-    public void setRat(String rat) {
+   /*public void setRat(String rat) {
         this.rat = rat;
     }
-
-    public void setImage(int image) {
+*/
+    public void setImage(String image) {
         this.image = image;
     }
 

@@ -1,11 +1,13 @@
 package creo.com.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -36,6 +38,7 @@ public class signup extends AppCompatActivity {
     TextInputEditText name,email,phoneno,password;
     private String URLline = Global.BASE_URL+"user/new_cabs/sign_up/";
     private ProgressDialog dialog ;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,8 +137,30 @@ public class signup extends AppCompatActivity {
         requestQueue.add(stringRequest);
 
     }
+    @Override
+    public void onBackPressed() {
 
 
 
+
+        if (doubleBackToExitPressedOnce) {
+            finishAffinity();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
+
+
+
+}
 
