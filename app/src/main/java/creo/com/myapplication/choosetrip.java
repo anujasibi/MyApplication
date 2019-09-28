@@ -6,10 +6,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,9 +37,14 @@ import creo.com.myapplication.utils.Global;
 public class choosetrip extends AppCompatActivity {
     private RecyclerAdapter recyclerAdapter;
     private RecyclerView recyclerView;
+    String source_lat = null;
+    String source_lng = null;
+    String dest_lat = null;
+    String dest_lng = null;
+    EditText source,dest,time;
     Context context = this;
     ArrayList<RecyclerPojo> dataModelArrayList;
-    private String URLline = Global.BASE_URL+"user/new_cabs/sign_up/";
+    private String URLline = Global.BASE_URL+"driver/get_cabs_on_source/";
 
     @SuppressLint("WrongConstant")
     @Override
@@ -45,6 +54,10 @@ public class choosetrip extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choosetrip);
 
+        source=findViewById(R.id.name);
+        dest=findViewById(R.id.name1);
+        time=findViewById(R.id.name2);
+
       /*  RecyclerPojo[] recyclerPojo = new RecyclerPojo[]{
                 new RecyclerPojo("ALTO", R.drawable.alto, "45 KM", "4.2*"),
                 new RecyclerPojo("DZIRE", R.drawable.dzire, "50 KM", "3.5*"),
@@ -52,6 +65,30 @@ public class choosetrip extends AppCompatActivity {
 
 
         };*/
+
+      source.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+          @Override
+          public void onFocusChange(View v, boolean hasFocus) {
+              String address = source.getText().toString();
+
+              GeocodingLocation locationAddress = new GeocodingLocation();
+              locationAddress.getAddressFromLocation(address,
+                      getApplicationContext(), new choosetrip.GeocoderHandler());
+
+          }
+      });
+
+    dest.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+          @Override
+          public void onFocusChange(View v, boolean hasFocus) {
+              String address = dest.getText().toString();
+
+              GeocodingLocation locationAddress = new GeocodingLocation();
+              locationAddress.getAddressFromLocation(address,
+                      getApplicationContext(), new choosetrip.GeocoderHandler1());
+
+          }
+      });
 
 
         recyclerView = findViewById(R.id.re);
@@ -69,17 +106,78 @@ public class choosetrip extends AppCompatActivity {
         ty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                recyclerView.setVisibility(View.VISIBLE);
-                passlatlong();
+
+            //
+            passlatlong();
             }
         });
     }
+
+
+    private class GeocoderHandler extends Handler {
+        @Override
+        public void handleMessage(Message message) {
+            String locationAddress;
+            String lat,lonh;
+
+            switch (message.what) {
+                case 1:
+                    Bundle bundle = message.getData();
+                    locationAddress = bundle.getString("address");
+                    lat= bundle.getString("lat");
+                    lonh=bundle.getString("long");
+                    Log.d("source","mm"+lat);
+                    Log.d("longitude","mm"+lonh);
+                    source_lat = lat;
+                    source_lng = lonh;
+                    Toast.makeText(choosetrip.this,source_lat+source_lng,Toast.LENGTH_SHORT).show();
+                    //    sessionManager.setDestLat(lat);
+                    //  sessionManager.setDestLong(lonh);
+                    break;
+                default:
+                    locationAddress = null;
+            }
+            //  latLongTV.setText(locationAddress);
+            Log.d("locationaddress","mm"+locationAddress);
+        }
+    }
+
+    private class GeocoderHandler1 extends Handler {
+        @Override
+        public void handleMessage(Message message) {
+            String locationAddress;
+            String lat,lonh;
+
+            switch (message.what) {
+                case 1:
+                    Bundle bundle = message.getData();
+                    locationAddress = bundle.getString("address");
+                    lat= bundle.getString("lat");
+                    lonh=bundle.getString("long");
+                    Log.d("source","mm"+lat);
+                    Log.d("longitude","mm"+lonh);
+                    dest_lat = lat;
+                    dest_lng = lonh;
+                    Toast.makeText(choosetrip.this,dest_lat+dest_lng,Toast.LENGTH_SHORT).show();
+                    //    sessionManager.setDestLat(lat);
+                    //  sessionManager.setDestLong(lonh);
+                    break;
+                default:
+                    locationAddress = null;
+            }
+            //  latLongTV.setText(locationAddress);
+            Log.d("locationaddress","mm"+locationAddress);
+        }
+    }
+
+
 
     private void passlatlong(){
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLline,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        recyclerView.setVisibility(View.VISIBLE);
                         Toast.makeText(choosetrip.this,response,Toast.LENGTH_LONG).show();
                         //parseData(response);
                         try {
@@ -132,8 +230,10 @@ public class choosetrip extends AppCompatActivity {
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
-             //   params.put("latitude", latitu);
-             //   params.put("longitude", longitu);
+              params.put("latitude", source_lat);
+             params.put("longitude", source_lng);
+             params.put("dest_lat",dest_lat);
+             params.put("dest_long",dest_lng);
                 return params;
             }
 

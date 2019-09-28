@@ -22,12 +22,12 @@ public class GeocodingLocation {
             @Override
             public void run() {
                 Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+                Log.d("locationkaloor","mm"+locationAddress);
                 String result = null;
                 String lat=null;
                 String longt=null;
                 try {
-                    List
-                            addressList = geocoder.getFromLocationName(locationAddress, 1);
+                    List addressList = geocoder.getFromLocationName(locationAddress, 1);
                     if (addressList != null && addressList.size() > 0) {
                         Address address = (Address) addressList.get(0);
                         StringBuilder sb = new StringBuilder();

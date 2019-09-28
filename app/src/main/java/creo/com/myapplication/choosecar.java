@@ -8,11 +8,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Window;
+import android.widget.EditText;
 
 public class choosecar extends AppCompatActivity {
     private RecyclerAdapter recyclerAdapter;
     private RecyclerView recyclerView;
     Context mContext=this;
+    EditText editText,editt,time;
 
     @SuppressLint("WrongConstant")
     @Override
