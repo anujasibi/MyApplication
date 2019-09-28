@@ -102,6 +102,7 @@ import java.util.List;
 import java.util.Map;
 
 import creo.com.myapplication.utils.Global;
+import creo.com.myapplication.utils.SessionManager;
 
 public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, com.google.android.gms.location.LocationListener {
 
@@ -110,6 +111,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static String TAG = "MAP LOCATION";
     Context mContext=this;
+    SessionManager sessionManager;
 
     TextView mLocationMarkerText;
     private LatLng mCenterLatLong;
@@ -176,6 +178,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation_drawer);
+        sessionManager = new SessionManager(this);
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         cardView = (CardView) findViewById(R.id.card);
@@ -340,6 +343,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 
                     latitu=Double.toString(mCenterLatLong.latitude);
                     longitu=Double.toString(mCenterLatLong.longitude);
+
+                    sessionManager.setSourceLat(latitu);
+                    sessionManager.setSourceLong(longitu);
 
                     startIntentService(mLocation);
                     mLocationMarkerText.setText("Lat : " + mCenterLatLong.latitude + "," + "Long : " + mCenterLatLong.longitude);
@@ -894,6 +900,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                             String ot = jsonObject.optString("message");
                             String status=jsonObject.optString("status");
                             Log.d("otp","mm"+ot);
+
                             Toast.makeText(MainActivity.this, ot, Toast.LENGTH_LONG).show();
                           //  JSONObject obj = new JSONObject(response);
 

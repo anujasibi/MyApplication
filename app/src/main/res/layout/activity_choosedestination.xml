@@ -52,5 +52,51 @@
         android:layout_height="30dp"
         tools:ignore="MissingConstraints" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/addressET"
+        android:layout_below="@+id/txt"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginBottom="2dp"
+
+        >
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:id="@+id/name"
+            android:paddingTop="5dp"
+            android:hint="Enter your destination manually(Either Search or Manual)"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginBottom="2dp"
+            android:layout_height="match_parent" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="#1AAEF4"
+        android:textColor="#fff"
+        android:gravity="center_vertical|center_horizontal"
+        android:text="Search Manually"
+        android:id="@+id/addressButton"
+        android:layout_below="@+id/addressET"
+        android:layout_marginTop="10dp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text=""
+        android:id="@+id/latLongTV"
+        android:layout_centerVertical="true"
+        android:layout_below="@+id/addressButton" />
+
 
 </RelativeLayout>

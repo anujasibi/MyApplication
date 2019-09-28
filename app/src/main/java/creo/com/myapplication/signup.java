@@ -35,7 +35,7 @@ public class signup extends AppCompatActivity {
     TextView login;
     Context context=this;
     String phone_no = null;
-    TextInputEditText name,email,phoneno,password;
+    TextInputEditText name,email,phoneno,password,uname;
     private String URLline = Global.BASE_URL+"user/new_cabs/sign_up/";
     private ProgressDialog dialog ;
     boolean doubleBackToExitPressedOnce = false;
@@ -50,6 +50,7 @@ public class signup extends AppCompatActivity {
         email=findViewById(R.id.ema);
         phoneno=findViewById(R.id.phnn);
         password=findViewById(R.id.names);
+        uname=findViewById(R.id.unames);
         signup=findViewById(R.id.tb);
         login=findViewById(R.id.si);
         Bundle bundle = getIntent().getExtras();
@@ -128,6 +129,7 @@ public class signup extends AppCompatActivity {
                 params.put("email",email.getText().toString());
                 params.put("password",password.getText().toString());
                 params.put("phone_no",phoneno.getText().toString());
+                params.put("username",uname.getText().toString());
                 return params;
             }
 
