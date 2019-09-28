@@ -39,6 +39,9 @@ public class signup extends AppCompatActivity {
     private String URLline = Global.BASE_URL+"user/new_cabs/sign_up/";
     private ProgressDialog dialog ;
     boolean doubleBackToExitPressedOnce = false;
+    private String URLl = Global.BASE_URL+"user/check_username/";
+    private String URLli = Global.BASE_URL+"user/check_email/";
+    private String URLlin = Global.BASE_URL+"user/check_phoneno/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,26 @@ public class signup extends AppCompatActivity {
         phoneno.setText(phone_no);
         phoneno.setEnabled(false);
         dialog=new ProgressDialog(signup.this,R.style.MyAlertDialogStyle);
+        uname.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                checkuname();
+            }
+        });
+        email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                checkemail();
+            }
+        });
+        phoneno.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                checkphone();
+            }
+        });
+
+
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,6 +103,156 @@ public class signup extends AppCompatActivity {
 
 
     }
+
+    private void checkphone(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLlin,
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Toast.makeText(registernew.this,response,Toast.LENGTH_LONG).show();
+                        //parseData(response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String ot = jsonObject.optString("message");
+                            String status=jsonObject.optString("code");
+                            Log.d("otp","mm"+ot);
+                            if(status.equals("2OO")){
+                                //Toast.makeText(signup.this, ot, Toast.LENGTH_LONG).show();
+                            }
+                            else if(status.equals("201")){
+                                //   Toast.makeText(registernew.this,"PhoneNumber Field should not be null",Toast.LENGTH_LONG).show();
+                                phoneno.setError("PhoneNumber already exist");
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Log.d("response","hhh"+response);
+
+
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(signup.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("phone_no",phoneno.getText().toString());
+                return params;
+            }
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
+
+
+    }
+
+    private void checkemail(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLli,
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Toast.makeText(registernew.this,response,Toast.LENGTH_LONG).show();
+                        //parseData(response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String ot = jsonObject.optString("message");
+                            String status=jsonObject.optString("code");
+                            Log.d("otp","mm"+ot);
+                            if(status.equals("2OO")){
+                                //Toast.makeText(signup.this, ot, Toast.LENGTH_LONG).show();
+                            }
+                            else if(status.equals("201")){
+                                //   Toast.makeText(registernew.this,"PhoneNumber Field should not be null",Toast.LENGTH_LONG).show();
+                                email.setError("Email already exist");
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Log.d("response","hhh"+response);
+
+
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(signup.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("email",email.getText().toString());
+                return params;
+            }
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
+
+
+    }
+    private void checkuname(){
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, URLl,
+                new com.android.volley.Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // Toast.makeText(registernew.this,response,Toast.LENGTH_LONG).show();
+                        //parseData(response);
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+                            String ot = jsonObject.optString("message");
+                            String status=jsonObject.optString("code");
+                            Log.d("otp","mm"+ot);
+                            if(status.equals("2OO")){
+                                //Toast.makeText(signup.this, ot, Toast.LENGTH_LONG).show();
+                            }
+                            else if(status.equals("201")){
+                                //   Toast.makeText(registernew.this,"PhoneNumber Field should not be null",Toast.LENGTH_LONG).show();
+                                uname.setError("Username already exist");
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Log.d("response","hhh"+response);
+
+
+                    }
+                },
+                new com.android.volley.Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(signup.this,error.toString(),Toast.LENGTH_LONG).show();
+                    }
+                }){
+            @Override
+            protected Map<String,String> getParams(){
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("username",uname.getText().toString());
+                return params;
+            }
+
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        requestQueue.add(stringRequest);
+
+
+    }
+
 
     private void signupuser() {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URLline,

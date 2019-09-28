@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".choosedestination"></activity>
+        <activity android:name=".choosecardetails"></activity>
+        <activity android:name=".choosedestination" />
         <activity android:name=".CarDetailsnew" />
         <activity android:name=".LoginReset" />
         <activity android:name=".verify" />

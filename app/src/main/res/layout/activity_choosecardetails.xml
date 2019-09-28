@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-  >
+    android:fitsSystemWindows="true">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -97,7 +97,17 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="20dp"
                         android:id="@+id/names"/>
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Rating:"
+                        android:textSize="18sp"
+                        android:textColor="#000"
+                        android:layout_marginStart="30dp"
+                        android:layout_below="@+id/name"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/rate"/>
 
                     <TextView
                         android:id="@+id/Rating"
@@ -105,8 +115,8 @@
                         android:layout_height="30dp"
                         android:layout_below="@+id/name"
                         android:layout_marginTop="10dp"
-
-                        android:layout_marginLeft="10dp"
+                        android:layout_toEndOf="@+id/name"
+                        android:layout_marginLeft="20dp"
                         android:background="#1AAEF4"
                         android:text="4.5*"
                         android:textAlignment="center"
@@ -139,32 +149,66 @@
                 android:id="@+id/carde"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_height="50dp">
+                android:layout_height="80dp">
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:id="@+id/textn"
-                    android:text="Your Destination:"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textn"
+                        android:text="Source:"
                         android:layout_alignParentStart="true"
-                    android:textColor="#000"
-                    android:textAlignment="viewEnd"
-                    android:layout_marginLeft="10dp"
+                        android:textColor="#000"
+                        android:textAlignment="viewEnd"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginStart="50dp"
-                    android:gravity="center_vertical"
-                    />
+                        android:gravity="center_vertical"
+                        />
                     <TextView
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:id="@+id/textn1"
                         android:layout_alignParentEnd="true"
+                        android:layout_marginTop="20dp"
+                        android:text="Destination"
+                        android:layout_marginStart="30dp"
+                        android:textStyle="bold"
+                        android:layout_toEndOf="@+id/textn"
+                        android:textAlignment="center"
+                        android:textColor="#000"
+                        android:textSize="18sp"
+                        android:gravity="center_vertical"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textnn"
+                        android:layout_below="@+id/textn"
+                        android:text="Destination:"
+                        android:layout_alignParentStart="true"
+                        android:textColor="#000"
+                        android:textAlignment="viewEnd"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginStart="50dp"
+                        android:gravity="center_vertical"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/textn11"
+                        android:layout_below="@+id/textn"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="10dp"
                         android:text="Destination"
                         android:layout_marginStart="0dp"
                         android:textStyle="bold"
-                        android:layout_toEndOf="@+id/textn"
+                        android:layout_toEndOf="@+id/textnn"
                         android:textAlignment="center"
                         android:textColor="#000"
                         android:textSize="18sp"
@@ -244,4 +288,4 @@
 
 
 
-</RelativeLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
